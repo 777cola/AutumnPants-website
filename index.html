@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>戚俊皓 · 项目枢纽</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Sans+TC:wght@200;300;400;500&display=swap" rel="stylesheet" />
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        body{
+            font-family:'Inter','Noto Sans SC','Noto Sans TC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+            background:#f4f2ee;
+            color:#1a1a1a;
+            min-height:100vh;overflow:hidden;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            user-select:none;
+        }
+        body::after{
+            content:'';position:fixed;inset:0;z-index:999;
+            pointer-events:none;opacity:.025;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat:repeat;background-size:256px 256px;
+        }
+        #cursor-glow{
+            position:fixed;pointer-events:none;z-index:0;
+            width:800px;height:800px;border-radius:50%;
+            background:radial-gradient(circle,rgba(180,140,100,.07) 0%,transparent 70%);
+            transform:translate(-50%,-50%);will-change:transform;
+        }
+
+        /* ── Lang Toggle (Expandable Tabs style with animation) ── */
+        #lang-toggle{
+            position:fixed;top:2rem;right:2.5rem;z-index:100;
+            display:flex;align-items:center;
+            background:#fff;
+            border:1px solid rgba(0,0,0,.06);
+            border-radius:16px;
+            padding:4px;
+            box-shadow:0 2px 16px rgba(0,0,0,.04);
+        }
+        .lang-btn{
+            display:flex;align-items:center;gap:0;
+            background:transparent;border:none;
+            font-family:inherit;font-size:.8rem;font-weight:400;letter-spacing:.04em;
+            color:rgba(0,0,0,.2);
+            cursor:pointer;
+            padding:.4rem .5rem;
+            border-radius:12px;
+            white-space:nowrap;
+            transition:color .3s,background .3s,box-shadow .3s,padding .45s cubic-bezier(.22,1,.36,1);
+        }
+        .lang-btn .abbr{display:inline-block}
+        .lang-btn .full{
+            display:inline-block;
+            max-width:0;
+            overflow:hidden;
+            vertical-align:middle;
+            white-space:nowrap;
+            transition:max-width .45s cubic-bezier(.22,1,.36,1),opacity .3s ease;
+            opacity:0;
+        }
+        .lang-btn.active{
+            color:#1a1a1a;
+            background:rgba(0,0,0,.04);
+            box-shadow:0 1px 3px rgba(0,0,0,.04);
+            padding:.4rem .85rem;
+        }
+        .lang-btn.active .full{
+            max-width:80px;
+            opacity:1;
+            margin-left:6px;
+        }
+        .lang-btn:not(.active):hover{color:rgba(0,0,0,.45);background:rgba(0,0,0,.02)}
+
+        .orbit-wrap{
+            position:relative;z-index:1;
+            width:100%;height:100vh;
+            display:flex;align-items:center;justify-content:center;
+        }
+        .orbit-view{
+            position:relative;
+            width:900px;height:900px;
+            display:flex;align-items:center;justify-content:center;
+        }
+        .orb-ring{
+            position:absolute;top:50%;left:50%;
+            border-radius:50%;transform:translate(-50%,-50%);
+            pointer-events:none;
+        }
+        .orb-ring.r1{width:700px;height:700px;border:1px solid rgba(0,0,0,.08);}
+        .orb-ring.r2{width:560px;height:560px;border:1px dashed rgba(0,0,0,.05);}
+        .orb-ring.r3{width:340px;height:340px;border:1px solid rgba(0,0,0,.05);}
+        .orb-dot{
+            position:absolute;top:50%;left:50%;
+            width:6px;height:6px;margin:-3px 0 0 -3px;
+            border-radius:50%;background:rgba(0,0,0,.08);
+            will-change:transform;
+            transition:background .4s,transform .4s;
+        }
+        .orb-dot.active{background:#b48a64;transform:scale(1.8)}
+
+        .center-hub{
+            position:absolute;top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:200px;height:200px;
+            border-radius:50%;
+            border:1px solid rgba(0,0,0,.07);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            background:rgba(255,255,255,.55);
+            backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+            pointer-events:none;
+            box-shadow:0 0 60px rgba(180,140,100,.08),inset 0 1px 0 rgba(255,255,255,.6);
+            will-change:transform;
+        }
+        .center-hub .name-cn{
+            font-size:1.6rem;font-weight:400;letter-spacing:.06em;
+            color:rgba(0,0,0,.75);line-height:1.2;
+        }
+        .center-hub .name-en{
+            font-size:.95rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;
+            color:rgba(0,0,0,.55);margin-top:4px;
+        }
+        .center-hub .role{
+            font-size:.8rem;font-weight:400;letter-spacing:.12em;
+            color:rgba(0,0,0,.45);margin-top:6px;
+            transition:opacity .5s;
+        }
+        .pulse-ring{
+            position:absolute;top:50%;left:50%;
+            width:200px;height:200px;margin:-100px 0 0 -100px;
+            border-radius:50%;border:1px solid rgba(180,140,100,.15);
+            pointer-events:none;opacity:0;transform:scale(1);
+            transition:opacity .4s,transform .6s cubic-bezier(.22,1,.36,1);
+        }
+        .pulse-ring.visible{opacity:1;transform:scale(1.3);}
+
+        .project-item{
+            position:absolute;top:50%;left:50%;
+            text-decoration:none;color:inherit;cursor:pointer;
+            opacity:0;will-change:transform,opacity;
+        }
+        .project-item .inner{padding:.5rem 0;}
+        .project-item .num{
+            font-size:.7rem;font-weight:500;letter-spacing:.06em;
+            color:rgba(0,0,0,.25);margin-bottom:.25rem;
+            transition:color .4s;
+        }
+        .project-item .cn-name{
+            font-size:1.15rem;font-weight:400;letter-spacing:.04em;
+            color:#1a1a1a;line-height:1.3;
+            transition:color .4s;
+        }
+        .project-item .pdesc{
+            font-size:.8rem;font-weight:400;letter-spacing:.03em;
+            color:#1a1a1a;opacity:.4;line-height:1.4;
+            transition:opacity .4s;
+        }
+        .project-item:hover .num{color:#b48a64}
+        .project-item:hover .cn-name{color:#b48a64}
+        .project-item:hover .sep-line{background:#b48a64;width:34px}
+        .project-item:hover .pdesc{opacity:.6}
+
+        .project-item.p1{transform:translate(-50%,-50%) rotate(45deg) translateY(-350px) rotate(-45deg)}
+        .project-item.p2{transform:translate(-50%,-50%) rotate(135deg) translateY(-350px) rotate(-135deg)}
+        .project-item.p3{transform:translate(-50%,-50%) rotate(225deg) translateY(-350px) rotate(-225deg)}
+        .project-item.p4{transform:translate(-50%,-50%) rotate(315deg) translateY(-350px) rotate(-315deg)}
+
+        .orbit-footer{
+            position:fixed;bottom:1.5rem;left:0;right:0;z-index:1;text-align:center;
+        }
+        .orbit-footer p{font-size:.6rem;font-weight:400;letter-spacing:.15em;color:rgba(0,0,0,.25);}
+
+        .orbit-view.loaded .project-item{opacity:1}
+        .orbit-view.loaded .project-item{transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1)}
+        .project-item.p1{transition-delay:0s}
+        .project-item.p2{transition-delay:.12s}
+        .project-item.p3{transition-delay:.24s}
+        .project-item.p4{transition-delay:.36s}
+
+        @media(max-width:1024px){
+            .orbit-view{width:100vw;height:100vw;max-width:700px;max-height:700px}
+            .orb-ring.r1{width:80vw;height:80vw;max-width:550px;max-height:550px}
+            .orb-ring.r2{width:65vw;height:65vw;max-width:440px;max-height:440px}
+            .orb-ring.r3{width:40vw;height:40vw;max-width:270px;max-height:270px}
+            .center-hub{width:150px;height:150px}
+            .center-hub .name-cn{font-size:1.2rem}
+            .center-hub .name-en{font-size:.8rem}
+            .center-hub .role{font-size:.7rem}
+            .project-item .cn-name{font-size:.95rem}
+            .project-item .en-name{font-size:.7rem}
+            .project-item .pdesc{font-size:.65rem}
+            .project-item.p1{transform:translate(-50%,-50%) rotate(45deg) translateY(-40vw) rotate(-45deg)}
+            .project-item.p2{transform:translate(-50%,-50%) rotate(135deg) translateY(-40vw) rotate(-135deg)}
+            .project-item.p3{transform:translate(-50%,-50%) rotate(225deg) translateY(-40vw) rotate(-225deg)}
+            .project-item.p4{transform:translate(-50%,-50%) rotate(315deg) translateY(-40vw) rotate(-315deg)}
+            .orb-dot{width:4px;height:4px}
+        }
+        @media(max-width:640px){
+            body{overflow-y:auto}
+            .orbit-view{width:100%;height:auto;flex-direction:column;padding:5rem 1.5rem 3rem;max-width:none}
+            .orbit-view .orb-ring,.orbit-view .orb-dot,.pulse-ring{display:none}
+            .center-hub{position:relative;top:auto;left:auto;transform:none!important;margin-bottom:2.5rem;pointer-events:none;width:150px;height:150px}
+            .center-hub .name-cn{font-size:1.1rem}
+            .center-hub .name-en{font-size:.75rem}
+            .center-hub .role{font-size:.65rem}
+            .project-item{position:relative;top:auto;left:auto;transform:none!important;margin-bottom:1.25rem;display:block;opacity:1!important;width:100%;max-width:340px}
+            .orbit-view.loaded .project-item{transition:opacity .6s ease,transform .4s ease}
+            .project-item .inner{padding:.6rem 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 .5rem}
+            .project-item .num{width:100%;margin-bottom:0;font-size:.55rem}
+            .project-item .cn-name{order:1}
+            .project-item .sep-line{display:none}
+            .project-item .pdesc{order:3;width:100%;margin-top:.15rem;font-size:.6rem}
+            .orbit-wrap{height:auto;min-height:100vh}
+            #lang-toggle{top:1rem;right:1rem;border-radius:12px;padding:3px}
+            .lang-btn{font-size:.7rem;padding:.3rem .4rem;border-radius:9px}
+            .lang-btn.active{padding:.3rem .6rem}
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor-glow"></div>
+
+    <div id="lang-toggle">
+        <button class="lang-btn active" data-lang="zh-CN">
+            <span class="abbr">简</span>
+            <span class="full">简体中文</span>
+        </button>
+        <button class="lang-btn" data-lang="zh-TW">
+            <span class="abbr">繁</span>
+            <span class="full">繁體中文</span>
+        </button>
+        <button class="lang-btn" data-lang="en">
+            <span class="abbr">EN</span>
+            <span class="full">English</span>
+        </button>
+    </div>
+
+    <div class="orbit-wrap">
+        <div class="orbit-view" id="orbitView">
+            <div class="orb-ring r1"></div>
+            <div class="orb-ring r2"></div>
+            <div class="orb-ring r3"></div>
+            <div class="orb-dot d1"></div>
+            <div class="orb-dot d2"></div>
+            <div class="orb-dot d3"></div>
+            <div class="orb-dot d4"></div>
+            <div class="pulse-ring" id="pulseRing"></div>
+            <div class="center-hub" id="centerHub">
+                <div class="name-cn" id="hubNameCN">戚俊皓</div>
+                <div class="name-en" id="hubNameEN">QI JUNHAO</div>
+                <div class="role" id="hubRole">项目枢纽</div>
+            </div>
+
+            <a class="project-item p1" href="https://777cola.github.io/investment-asset-platform/" target="_blank" rel="noopener">
+                <div class="inner">
+                    <div class="num">001</div>
+                    <div class="cn-name" id="p1cn">资产管理平台</div>
+                    <span class="sep-line"></span>
+                    <div class="pdesc" id="p1desc">投资管理平台</div>
+                </div>
+            </a>
+            <a class="project-item p2" href="#" target="_blank" rel="noopener">
+                <div class="inner">
+                    <div class="num">002</div>
+                    <div class="cn-name" id="p2cn">个人网站</div>
+                    <span class="sep-line"></span>
+                    <div class="pdesc" id="p2desc">链接待添加</div>
+                </div>
+            </a>
+            <a class="project-item p3" href="https://777cola.github.io/PowerPulse/" target="_blank" rel="noopener">
+                <div class="inner">
+                    <div class="num">003</div>
+                    <div class="cn-name" id="p3cn">Mac 电源插件</div>
+                    <span class="sep-line"></span>
+                    <div class="pdesc" id="p3desc">链接待添加</div>
+                </div>
+            </a>
+            <a class="project-item p4" href="#" target="_blank" rel="noopener">
+                <div class="inner">
+                    <div class="num">004</div>
+                    <div class="cn-name" id="p4cn">更多项目</div>
+                    <span class="sep-line"></span>
+                    <div class="pdesc" id="p4desc">即将到来</div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="orbit-footer"><p id="footerText">&copy; 2026 戚俊皓</p></div>
+
+    <script>
+        (function(){
+            const dict = {
+                'zh-CN':{
+                    hubRole:'项目枢纽',
+                    hubName:'戚俊皓',hubNameSub:'QI JUNHAO',
+                    p1cn:'资产管理平台',p1desc:'投资管理平台',
+                    p2cn:'个人网站',p2desc:'开发中',
+                    p3cn:'Mac 电源插件',p3desc:'Mac 电池管理工具',
+                    p4cn:'更多项目',p4desc:'即将到来',
+                    footer:'© 2026 戚俊皓',
+                },
+                'zh-TW':{
+                    hubRole:'項目樞紐',
+                    hubName:'戚俊皓',hubNameSub:'QI JUNHAO',
+                    p1cn:'資產管理平台',p1desc:'投資管理平台',
+                    p2cn:'個人網站',p2desc:'開發中',
+                    p3cn:'Mac 電源插件',p3desc:'Mac 電池管理工具',
+                    p4cn:'更多項目',p4desc:'即將到來',
+                    footer:'© 2026 戚俊皓',
+                },
+                'en':{
+                    hubRole:'Project Hub',
+                    hubName:'Andy Qi',hubNameSub:'QI JUNHAO',
+                    p1cn:'Asset Platform',p1desc:'Investment management platform',
+                    p2cn:'Personal Site',p2desc:'In development',
+                    p3cn:'Mac Power Plug-in',p3desc:'Mac battery manager',
+                    p4cn:'More Projects',p4desc:'Coming soon',
+                    footer:'© 2026 Andy Qi',
+                }
+            };
+
+            function applyLang(lang){
+                const d = dict[lang];
+                if(!d) return;
+
+                document.getElementById('hubNameCN').textContent = d.hubName;
+                document.getElementById('hubNameEN').textContent = d.hubNameSub;
+                document.getElementById('hubRole').textContent = d.hubRole;
+
+                // Map hub language code -> asset platform language code
+                const langMap = {
+                    'zh-CN': 'zh',
+                    'zh-TW': 'zh-hant',
+                    'en': 'en'
+                };
+                const targetLang = langMap[lang] || 'zh';
+
+                for(let i=1;i<=4;i++){
+                    const cnEl = document.getElementById(`p${i}cn`);
+                    const descEl = document.getElementById(`p${i}desc`);
+                    if(cnEl) cnEl.textContent = d[`p${i}cn`];
+                    if(descEl) descEl.textContent = d[`p${i}desc`];
+
+                    // Append language parameter to project links
+                    const item = document.querySelector(`.project-item.p${i}`);
+                    if(item && item.getAttribute('href') && item.getAttribute('href') !== '#'){
+                        const baseUrl = item.getAttribute('href').split('?')[0];
+                        item.setAttribute('href', `${baseUrl}?lang=${targetLang}`);
+                    }
+                }
+
+                document.getElementById('footerText').textContent = d.footer;
+
+                document.querySelectorAll('.lang-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.lang === lang);
+                });
+
+                document.documentElement.lang = lang;
+            }
+
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.addEventListener('click', () => applyLang(b.dataset.lang));
+            });
+
+            // Apply initial language (zh-CN is default)
+            applyLang('zh-CN');
+
+            const glow = document.getElementById('cursor-glow');
+            document.addEventListener('mousemove', e => {
+                glow.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
+            });
+
+            requestAnimationFrame(() => {
+                document.getElementById('orbitView').classList.add('loaded');
+            });
+
+            const R = 350;
+            const dotAngles = [45,135,225,315];
+            const dots = document.querySelectorAll('.orb-dot');
+            const hub = document.getElementById('centerHub');
+            const pulseRing = document.getElementById('pulseRing');
+            const projectItems = document.querySelectorAll('.project-item');
+
+            projectItems.forEach(item => {
+                const pClass = Array.from(item.classList).find(c => c.startsWith('p'));
+                const idx = parseInt(pClass.replace('p','')) - 1;
+                item.addEventListener('mouseenter', () => {
+                    if(dots[idx]) dots[idx].classList.add('active');
+                    pulseRing.classList.add('visible');
+                });
+                item.addEventListener('mouseleave', () => {
+                    dots.forEach(d => d.classList.remove('active'));
+                    pulseRing.classList.remove('visible');
+                });
+            });
+
+            function isMobile(){ return window.innerWidth <= 640 }
+
+            function animate(time){
+                if(!isMobile()){
+                    const offset = time * 0.003;
+                    dots.forEach((dot, i) => {
+                        const angle = (dotAngles[i] + offset) * Math.PI / 180;
+                        dot.style.transform = `translate(${Math.cos(angle)*R}px,${Math.sin(angle)*R}px)`;
+                    });
+                    const fy = Math.sin(time * 0.0008) * 3;
+                    const fx = Math.cos(time * 0.0007) * 1.5;
+                    hub.style.transform = `translate(calc(-50% + ${fx}px), calc(-50% + ${fy}px))`;
+                    document.querySelector('.orb-ring.r1').style.transform = `translate(-50%,-50%) rotate(${time*0.004}deg)`;
+                    document.querySelector('.orb-ring.r2').style.transform = `translate(-50%,-50%) rotate(${-time*0.006}deg)`;
+                    document.querySelector('.orb-ring.r3').style.transform = `translate(-50%,-50%) rotate(${time*0.005}deg)`;
+                }
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+
+            const pc = document.createElement('div');
+            pc.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:0';
+            document.body.prepend(pc);
+            for(let i=0;i<8;i++){
+                const p = document.createElement('div');
+                const s = 1.5 + Math.random() * 2;
+                p.style.cssText = `position:absolute;width:${s}px;height:${s}px;border-radius:50%;background:rgba(180,140,100,.1);pointer-events:none;`;
+                pc.appendChild(p);
+                const bx = Math.random() * window.innerWidth;
+                const by = Math.random() * window.innerHeight;
+                const sp = 0.2 + Math.random() * 0.3;
+                let ph = Math.random() * Math.PI * 2;
+                (function drft(){
+                    ph += 0.005;
+                    const dx = Math.sin(ph) * 20 * sp;
+                    const dy = Math.cos(ph * 1.3) * 15 * sp;
+                    p.style.transform = `translate(${bx+dx}px,${by+dy}px)`;
+                    requestAnimationFrame(drft);
+                })();
+            }
+        })();
+    </script>
+</body>
+</html>
