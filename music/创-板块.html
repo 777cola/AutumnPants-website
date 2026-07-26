@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创作 — 创A · AutumnPants</title>
+<meta name="description" content="创作进度：0%" data-i18n-meta="desc">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♌</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Noto+Sans+SC:wght@100;200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f5f8fc;
+  --text: #1a2332;
+  --text-secondary: #5a6a7e;
+  --text-muted: #8a9baa;
+  --accent: #1A4B8C;
+  --accent-light: #3A7BC8;
+  --accent-subtle: rgba(26,75,140,0.04);
+  --accent-border: rgba(26,75,140,0.12);
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --font-sans: 'Instrument Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-cn: 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
+  --font-body: 'Noto Sans SC', sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-soft: #1e293b;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-subtle: rgba(59,130,246,0.06);
+  --accent-border: rgba(59,130,246,0.15);
+  --border: #334155;
+  --border-light: #1e293b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100dvh;
+  overflow: hidden;
+  font-family: var(--font-cn);
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ════════════════════════════════════════════
+   TOP NAV — matches 听-板块 (nav-blue unified)
+   ════════════════════════════════════════════ */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  padding: 14px 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, rgba(255,255,255,.95), transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+[data-theme="dark"] .topnav {
+  background: linear-gradient(180deg, rgba(15,23,42,.95), transparent);
+}
+.topnav .nav-center {
+  display: flex; align-items: center; gap: 24px;
+}
+.topnav .nav-wrap {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 100%; max-width: 1200px;
+}
+.topnav .home {
+  font-size: .8rem; color: var(--text-muted); text-decoration: none;
+  letter-spacing: .06em; display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-body);
+}
+.topnav .home::before { content: '\2190'; font-size: .75rem; }
+.topnav .home:hover { color: var(--accent); }
+.topnav .links {
+  display: flex; gap: 0; align-items: center; position: relative;
+  background: var(--accent-subtle); border-radius: 50px; padding: 3px;
+}
+.topnav .links a {
+  font-size: .78rem; color: var(--text-muted); text-decoration: none;
+  letter-spacing: .08em; padding: 6px 16px; transition: color .35s;
+  font-family: var(--font-body); position: relative; z-index: 1;
+  border-radius: 50px; white-space: nowrap;
+}
+.topnav .links a:hover,
+.topnav .links a.here { color: #fff; }
+.nav-pill {
+  position: absolute; top: 3px; height: calc(100% - 6px);
+  border-radius: 50px; background: var(--accent);
+  transition: left .35s cubic-bezier(.65,0,.35,1), width .35s cubic-bezier(.65,0,.35,1);
+  z-index: 0; pointer-events: none;
+}
+.topnav .nav-right {
+  display: flex; align-items: center; gap: .75rem;
+  margin-left: auto; position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+}
+.theme-toggle {
+  background: none; border: none; cursor: pointer;
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); transition: all var(--transition, 0.3s ease);
+}
+.theme-toggle:hover { background: var(--accent-subtle); color: var(--accent); }
+.theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lang-toggle {
+  position: relative; display: flex; align-items: center; height: 30px;
+  background: var(--accent-subtle); border-radius: 20px; padding: 2px; gap: 0;
+  border: 1px solid var(--accent-border); overflow: hidden;
+  transition: all var(--transition, 0.3s ease);
+}
+.lang-toggle:hover { border-color: var(--accent); }
+.lang-item {
+  padding: 3px 8px; font-size: .72rem; font-weight: 600;
+  color: var(--text-muted); transition: all .2s; white-space: nowrap;
+  border-radius: 16px; cursor: pointer; user-select: none;
+  pointer-events: auto;
+  font-family: var(--font-cn);
+}
+.lang-item.active { background: var(--accent); color: #fff; }
+.lang-item:not(.active):hover { color: var(--accent); }
+
+/* ════════════════════════════════════════════
+   LAYOUT — split: vinyl art left, stats right
+   ════════════════════════════════════════════ */
+
+.page {
+  height: 100dvh;
+  width: 100vw;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Left: Vinyl Hero ─── */
+.vinyl-side {
+  flex: 0 0 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+.vinyl-side::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 10%; bottom: 10%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--border), transparent);
+}
+
+.vinyl {
+  position: relative;
+  width: clamp(180px, 22vw, 320px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    #1a1a2e 0deg 30deg,
+    #16213e 30deg 60deg,
+    #1a1a2e 60deg 90deg,
+    #0f3460 90deg 120deg,
+    #1a1a2e 120deg 150deg,
+    #16213e 150deg 180deg,
+    #1a1a2e 180deg 210deg,
+    #0f3460 210deg 240deg,
+    #1a1a2e 240deg 270deg,
+    #16213e 270deg 300deg,
+    #1a1a2e 300deg 330deg,
+    #0f3460 330deg 360deg
+  );
+  box-shadow:
+    0 0 0 4px var(--border),
+    0 0 0 8px var(--bg-soft),
+    0 0 0 12px var(--border),
+    0 20px 60px rgba(0,0,0,0.08);
+  transition: transform 0.8s var(--ease);
+}
+.vinyl {
+  cursor: pointer;
+}
+.vinyl:hover {
+  transform: rotate(15deg) scale(1.02);
+}
+.vinyl.flipped {
+  animation: vinylReveal 0.8s ease forwards;
+}
+@keyframes vinylReveal {
+  0% { transform: rotate(0deg) scale(1); }
+  40% { transform: rotate(180deg) scale(0.95); }
+  60% { transform: rotate(180deg) scale(0.95); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.vinyl-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.vinyl-label .zero {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.vinyl-label .unit {
+  font-family: var(--font-cn);
+  font-weight: 200;
+  font-size: clamp(0.5rem, 0.7vw, 0.65rem);
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-top: 0.15rem;
+}
+.vinyl-groove {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.vinyl-groove2 {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+/* ─── Right: Content ─── */
+.content-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 4rem 3rem 3rem;
+  min-width: 0;
+}
+
+/* ─── Title (small, top) ─── */
+.title-block {
+  margin-bottom: 2rem;
+}
+.title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  margin-bottom: 0.6rem;
+}
+.title-badge .dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.3;
+  animation: dotBlink 1.5s ease-in-out infinite;
+}
+@keyframes dotBlink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+.title-main {
+  font-family: var(--font-cn);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+.title-main .accent { color: var(--accent); }
+.title-sub {
+  font-family: var(--font-cn);
+  font-weight: 200;
+  font-size: clamp(0.6rem, 0.75vw, 0.7rem);
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Stats: inline minimal ─── */
+.stats-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.8rem;
+}
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.stat-row:last-child { border-bottom: none; }
+
+.stat-label {
+  flex: 0 0 68px;
+  font-family: var(--font-cn);
+  font-weight: 300;
+  font-size: clamp(0.7rem, 0.8vw, 0.78rem);
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+.stat-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-soft);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.stat-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1.2s var(--ease);
+}
+.stat-fill.a { background: var(--accent); width: 0%; }
+.stat-fill.b { background: var(--accent-light); width: 0%; }
+.stat-fill.c { background: var(--text-muted); width: 0%; }
+.stat-fill.d { background: var(--accent); width: 0%; }
+
+.stat-value {
+  flex: 0 0 48px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(0.72rem, 0.8vw, 0.82rem);
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  transition: all 0.4s ease;
+}
+.stat-value.revealed {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ─── Hidden Track ─── */
+.hidden-track {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.6s ease, opacity 0.5s ease 0.1s;
+  margin-bottom: 0;
+}
+.hidden-track.open {
+  max-height: 200px;
+  opacity: 1;
+  margin-bottom: 1.2rem;
+}
+.hidden-track-inner {
+  padding: 0.8rem 1rem;
+  background: var(--accent-subtle);
+  border: 1px dashed var(--accent-border);
+  border-radius: var(--radius-sm);
+}
+.hidden-track-inner p {
+  font-family: var(--font-cn);
+  font-weight: 300;
+  font-size: clamp(0.68rem, 0.8vw, 0.78rem);
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.hidden-track-inner .song-title {
+  font-weight: 500;
+  color: var(--accent);
+}
+.hidden-track-inner .disclaimer {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-top: 0.3rem;
+}
+
+/* ─── Message ─── */
+.message-block {
+  margin-bottom: 1.5rem;
+  padding: 0.8rem 0;
+}
+.message-block p {
+  font-family: var(--font-cn);
+  font-weight: 300;
+  font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+.message-block .hl { color: var(--accent); font-weight: 500; }
+
+/* ─── Actions ─── */
+.action-block {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 1rem;
+  border-radius: 50px;
+  font-family: var(--font-cn);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  cursor: pointer;
+}
+.cta:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(26,75,140,0.2);
+  transform: translateY(-1px);
+}
+.cta svg {
+  width: 13px; height: 13px;
+  stroke: currentColor; stroke-width: 2;
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+.cta-ghost {
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.cta-ghost:hover {
+  border-color: var(--text-muted);
+  background: transparent;
+  color: var(--text-secondary);
+  box-shadow: none;
+}
+
+/* ─── Footer ─── */
+.footer {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 0; right: 0;
+  z-index: 1;
+  text-align: center;
+}
+.footer p {
+  font-family: var(--font-cn);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  html, body { height: auto; overflow: auto; }
+  .page { flex-direction: column; height: auto; min-height: 100dvh; }
+  .vinyl-side {
+    flex: none;
+    padding: 4rem 2rem 2rem;
+    min-height: 260px;
+  }
+  .vinyl-side::after { display: none; }
+  .content-side { padding: 1.5rem 1.5rem 3rem; }
+  .stat-label { flex: 0 0 60px; }
+  .footer { right: 1.5rem; bottom: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-wrap">
+    <div class="nav-center">
+      <a href="音乐首页.html" class="home" data-i18n="nav.home">音乐首页</a>
+      <div class="links">
+        <span class="nav-pill"></span>
+        <a href="听-板块.html" data-i18n="nav.listen">听</a>
+        <a href="赏-板块（演唱会）.html" data-i18n="nav.concert">赏</a>
+        <a href="演-板块/dist/舞台时光.html" data-i18n="nav.perform">演</a>
+        <a href="创-板块.html" class="here" data-i18n="nav.create">创</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" id="langToggle">
+        <span class="lang-item active" data-lang="zh">简</span>
+        <span class="lang-item" data-lang="en">EN</span>
+        <span class="lang-item" data-lang="hant">繁</span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+        <svg viewBox="0 0 24 24" id="themeIconSun"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg viewBox="0 0 24 24" id="themeIconMoon" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- Left: Vinyl -->
+  <div class="vinyl-side">
+    <div class="vinyl">
+      <div class="vinyl-groove2"></div>
+      <div class="vinyl-groove"></div>
+      <div class="vinyl-label">
+        <div class="zero" id="zeroCount">0</div>
+        <div class="unit" data-lang-text="vinyl.unit">首作品</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Content -->
+  <div class="content-side">
+
+    <div class="title-block">
+      <div class="title-badge">
+        <span class="dot"></span>
+        CREATION
+      </div>
+      <div class="title-main" data-lang-text="title.main"><span class="accent">创</span>作</div>
+      <div class="title-sub" data-lang-text="title.sub">现状一览，数据诚实</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-block" id="stats">
+      <div class="stat-row">
+        <span class="stat-label" data-lang-text="stats.lyric">写词</span>
+        <div class="stat-bar"><div class="stat-fill a"></div></div>
+        <span class="stat-value" data-lang-text="stats.count0">0 首</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label" data-lang-text="stats.compose">作曲</span>
+        <div class="stat-bar"><div class="stat-fill b"></div></div>
+        <span class="stat-value" data-lang-text="stats.count0">0 首</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label" data-lang-text="stats.arrange">编曲</span>
+        <div class="stat-bar"><div class="stat-fill c"></div></div>
+        <span class="stat-value" data-lang-text="stats.count0">0 首</span>
+      </div>
+      <div class="stat-row published-row">
+        <span class="stat-label" data-lang-text="stats.published">已发表</span>
+        <div class="stat-bar"><div class="stat-fill d"></div></div>
+        <span class="stat-value" id="pubValue" data-lang-text="stats.count0">0 首</span>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="message-block">
+      <p data-lang-text="message.text">
+        热情是有的，技能暂时没有。<br>
+        灵感已下单，等配送中。
+      </p>
+    </div>
+
+    <!-- Hidden Track -->
+    <div class="hidden-track" id="hiddenTrack">
+      <div class="hidden-track-inner">
+        <p data-lang-text="hidden.text">
+          严格来说有一首——<span class="song-title">《寻甸感觉》</span>。<br>
+          老师写的词，我唱的。歌手写的不是我。<br>
+          算半个吧。<span class="disclaimer" data-lang-text="hidden.disclaimer">隐藏曲目，点到即止。</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="action-block">
+      <a href="../contact/联系页面.html" class="cta">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span data-lang-text="cta.idea">有想法？带上我</span>
+      </a>
+      <a href="音乐首页.html" class="cta cta-ghost">
+        <span data-lang-text="cta.leave">先撤了</span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>© AutumnPants · <span data-lang-text="footer.status">创作中</span> · Qi JunHao</p>
+  </div>
+</div>
+<script>
+(function(){
+  'use strict';
+
+  // ─── Theme ───
+  function applyTheme() {
+    const t = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    updateThemeIcons(t);
+  }
+  function updateThemeIcons(theme) {
+    const sun = document.getElementById('themeIconSun');
+    const moon = document.getElementById('themeIconMoon');
+    if (!sun || !moon) return;
+    sun.style.display = theme === 'dark' ? 'none' : 'block';
+    moon.style.display = theme === 'dark' ? 'block' : 'none';
+  }
+  document.getElementById('themeToggle')?.addEventListener('click', function() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateThemeIcons(next);
+  });
+  applyTheme();
+
+  // ─── Vinyl click: hidden track ───
+  let revealed = false;
+  const vinyl = document.querySelector('.vinyl');
+  const zeroEl = document.querySelector('.zero');
+  const unitEl = document.querySelector('.unit');
+  const pubValue = document.getElementById('pubValue');
+  const hiddenTrack = document.getElementById('hiddenTrack');
+
+  vinyl.addEventListener('click', function() {
+    if (revealed) return;
+    revealed = true;
+    vinyl.classList.add('flipped');
+
+    // Flip the label from 0 to 1
+    setTimeout(() => {
+      zeroEl.textContent = '1';
+      unitEl.textContent = LANG_DATA[window._currentLang]?.['vinyl.unitRevealed'] || '首（隐藏曲目）';
+    }, 400);
+
+    // Update the published stat
+    setTimeout(() => {
+      pubValue.textContent = '1' + (window._currentLang === 'en' ? '' : ' 首');
+      pubValue.classList.add('revealed');
+      const ann = document.createElement('span');
+      ann.textContent = LANG_DATA[window._currentLang]?.['vinyl.annotation'] || '（严格来说）';
+      ann.style.cssText = 'font-family:Noto Sans SC,sans-serif;font-size:0.6rem;color:var(--text-muted);opacity:0.6;margin-left:0.3rem;white-space:nowrap;';
+      pubValue.parentNode.appendChild(ann);
+    }, 600);
+
+    // Reveal the hidden track message
+    setTimeout(() => {
+      hiddenTrack.classList.add('open');
+    }, 800);
+  });
+
+  // ─── Animate stat bars on load ───
+  requestAnimationFrame(() => {
+    const fills = document.querySelectorAll('.stat-fill');
+    fills.forEach(fill => {
+      setTimeout(() => {
+        fill.style.transition = 'width 0.6s ease';
+        fill.style.width = '0.5%';
+      }, 300);
+      setTimeout(() => {
+        fill.style.transition = 'width 0.4s ease';
+        fill.style.width = '0%';
+      }, 1000);
+    });
+  });
+
+  // ─── Entrance animations ───
+  const blocks = document.querySelectorAll('.title-block, .stats-block, .message-block, .action-block');
+  blocks.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s var(--ease)';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 200 + i * 120);
+  });
+
+  // ─── Pill Nav ──────────────────────────────────
+  (function initPillNav(){
+    const links = document.querySelector('.topnav .links');
+    if (!links) return;
+    const pill = links.querySelector('.nav-pill');
+    if (!pill) return;
+    const items = links.querySelectorAll('a');
+    function move(target){
+      pill.style.left = target.offsetLeft + 'px';
+      pill.style.width = target.offsetWidth + 'px';
+    }
+    const active = links.querySelector('a.here');
+    if(active) move(active);
+    items.forEach(item => item.addEventListener('mouseenter', () => move(item)));
+    links.addEventListener('mouseleave', () => {
+      const a = links.querySelector('a.here');
+      if(a) move(a);
+    });
+    window.addEventListener('resize', () => {
+      const a = links.querySelector('a.here');
+      if(a) move(a);
+    });
+  })();
+})();
+</script>
+
+<script>
+const LANG_DATA = {
+  zh: { 
+    'nav.home': '音乐首页',
+    'nav.listen': '听','nav.concert': '赏','nav.perform': '演','nav.create': '创',
+    'vinyl.unit': '首作品',
+    'title.main': '<span class="accent">创</span>作',
+    'title.sub': '现状一览，数据诚实',
+    'stats.lyric': '写词', 'stats.compose': '作曲', 'stats.arrange': '编曲', 'stats.published': '已发表',
+    'stats.count0': '0 首',
+    'message.text': '热情是有的，技能暂时没有。<br>灵感已下单，等配送中。',
+    'hidden.text': '严格来说有一首——<span class="song-title">《寻甸感觉》</span>。<br>老师写的词，我唱的。歌手写的不是我。<br>算半个吧。',
+    'hidden.disclaimer': '隐藏曲目，点到即止。',
+    'cta.idea': '有想法？带上我',
+    'cta.leave': '先撤了',
+    'vinyl.unitRevealed': '首（隐藏曲目）',
+    'vinyl.annotation': '（严格来说）',
+    '听': '听', '赏': '赏', '演': '演', '创': '创',
+  },
+  en: { 
+    'nav.home': 'Music Home',
+    'nav.listen': 'Listen','nav.concert': 'Live','nav.perform': 'Stage','nav.create': 'Create',
+    'vinyl.unit': 'works',
+    'title.main': '<span class="accent">Crea</span>tion',
+    'title.sub': 'The honest picture: zero so far',
+    'stats.lyric': 'Lyrics', 'stats.compose': 'Melody', 'stats.arrange': 'Arrangement', 'stats.published': 'Released',
+    'stats.count0': '0',
+    'message.text': 'Passion? 100%. Skills? Still loading.<br>Inspiration? Order placed, waiting for delivery.',
+    'hidden.text': 'Technically there is one — <span class="song-title">《Xundian Feeling》</span>.<br>Teacher wrote the lyrics, I sang. Credits don\'t mention me.<br>Counts as half, I guess.',
+    'hidden.disclaimer': 'Hidden track. Enough said.',
+    'cta.idea': 'Got an idea? Count me in',
+    'cta.leave': 'Not now',
+    'footer.status': 'In Progress',
+    'desc': 'Creation progress: 0%',
+    'vinyl.unitRevealed': 'works (hidden track)',
+    'vinyl.annotation': '(technically)',
+    '听': 'Listen', '赏': 'Live', '演': 'Stage', '创': 'Create',
+  },
+  hant: { 
+    'nav.home': '音樂首頁',
+    'nav.listen': '聽','nav.concert': '賞','nav.perform': '演','nav.create': '創',
+    'vinyl.unit': '首作品',
+    'title.main': '<span class="accent">創</span>作',
+    'title.sub': '現狀一覽，數據誠實',
+    'stats.lyric': '寫詞', 'stats.compose': '作曲', 'stats.arrange': '編曲', 'stats.published': '已發表',
+    'stats.count0': '0 首',
+    'message.text': '熱情是有的，技能暫時沒有。<br>靈感已下單，等配送中。',
+    'hidden.text': '嚴格來說有一首——<span class="song-title">《尋甸感覺》</span>。<br>老師寫的詞，我唱的。歌手寫的不是我。<br>算半首吧。',
+    'hidden.disclaimer': '隱藏曲目，點到即止。',
+    'cta.idea': '有想法？帶上我',
+    'cta.leave': '先撤了',
+    'footer.status': '創作中',
+    'desc': '創作進度：0%',
+    'vinyl.unitRevealed': '首（隱藏曲目）',
+    'vinyl.annotation': '（嚴格來說）',
+    '听': '聽', '赏': '賞', '演': '演', '创': '創',
+  },
+};
+const langToggleIIFE = (function(){
+  const toggle = document.getElementById('langToggle');
+  if (!toggle) return;
+  const items = toggle.querySelectorAll('.lang-item');
+  const saved = localStorage.getItem('lang') || 'zh';
+  window._currentLang = saved;
+  function apply(lang) {
+    window._currentLang = lang;
+    items.forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
+    document.querySelectorAll('[data-lang-text]').forEach(el => {
+      const key = el.getAttribute('data-lang-text');
+      if (LANG_DATA[lang] && LANG_DATA[lang][key]) el.innerHTML = LANG_DATA[lang][key];
+    });
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (LANG_DATA[lang] && LANG_DATA[lang][key]) el.innerHTML = LANG_DATA[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-meta]').forEach(el => {
+      const key = el.getAttribute('data-i18n-meta');
+      if (LANG_DATA[lang] && LANG_DATA[lang][key]) el.setAttribute('content', LANG_DATA[lang][key]);
+    });
+    localStorage.setItem('lang', lang);
+  }
+  items.forEach(el => el.addEventListener('click', () => apply(el.dataset.lang)));
+  apply(saved);
+})();
+</script>
+</body>
+</html>
