@@ -437,7 +437,7 @@ body{background:#08080c;color:#e2deec;font-family:"Inter","PingFang SC","Noto Sa
   <img id="fsImg" style="display:none;max-width:93vw;max-height:88vh;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.7);object-fit:contain">
 </div>
 
-<audio id="bgm" src="陶喆《望春风》.mp3" loop preload="auto"></audio>
+<audio id="bgm" src="陶喆《望春风》.mp3" loop preload="auto" autoplay></audio>
 
 <div id="app"></div>
 
@@ -708,6 +708,11 @@ const scrollProgress=document.getElementById('scrollProgress');
 const allScreens=[hero,...document.querySelectorAll('.concert')];
 const totalBars=allScreens.length;
 const bgm=document.getElementById('bgm');
+// hermes: auto-play on load (browser may block; button fallback works)
+bgm.play().then(()=>{
+  const btn=document.querySelector('.sp-music');
+  if(btn){btn.classList.add('playing');btn.innerHTML='⏸';}
+}).catch(()=>{});
 
 // ── 控件行：播放按钮 + 音量滑块，与标记线对齐 ──
 const controls=document.createElement('div');
