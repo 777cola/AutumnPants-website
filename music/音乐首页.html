@@ -9,63 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@100;200;300;400;500;600;700;900&display=swap" rel="stylesheet">
-<!-- CSS vars + base reset inlined for GitHub Pages -->
-<style>
-/* ─── Design System: CSS Custom Properties ─── */
-:root {
-  --bg: #ffffff;
-  --bg-soft: #f5f8fc;
-  --surface: #ffffff;
-  --surface-hover: #f0f4fa;
-  --glass: rgba(255,255,255,0.75);
-  --glass-border: rgba(26,75,140,0.08);
-  --text: #1a2332;
-  --text-secondary: #5a6a7e;
-  --text-muted: #8a9baa;
-  --accent: #1A4B8C;
-  --accent-light: #3A7BC8;
-  --accent-dark: #0f3460;
-  --accent-glow: rgba(26,75,140,0.08);
-  --accent-subtle: rgba(26,75,140,0.04);
-  --accent-border: rgba(26,75,140,0.12);
-  --border: #e2e8f0;
-  --border-light: #f1f5f9;
-  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-cn: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-  --font-body: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-}
-[data-theme="dark"] {
-  --bg: #080d1a;
-  --bg-soft: #0f172a;
-  --surface: #131c31;
-  --surface-hover: #1a2640;
-  --glass: rgba(19,28,49,0.82);
-  --glass-border: rgba(96,165,250,0.12);
-  --text: #e8edf5;
-  --text-secondary: #94a3b8;
-  --text-muted: #5a6b8a;
-  --accent: #5b9cf5;
-  --accent-light: #7db8ff;
-  --accent-dark: #3a7bd5;
-  --accent-glow: rgba(91,156,245,0.12);
-  --accent-subtle: rgba(91,156,245,0.06);
-  --accent-border: rgba(91,156,245,0.15);
-  --border: #1e2d48;
-  --border-light: #18243a;
-}
-/* ─── Base Reset (from style.css) ─── */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-::selection { background: var(--accent); color: white; }
-a { color: inherit; text-decoration: none; }
-</style>
+<link rel="stylesheet" href="../style.css">
 <style>
 /* ════════════════════════════════════════════
    MUSIC HUB — v5 非对称斜列
@@ -794,6 +738,7 @@ html, body { height: 100dvh; overflow: hidden; margin: 0; }
 
 </div>
 
+<script src="../common.js"></script>
 <script>
 // ── I18N ──
 const I18N = {
