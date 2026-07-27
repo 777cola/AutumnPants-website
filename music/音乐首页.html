@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@100;200;300;400;500;600;700;900&display=swap" rel="stylesheet">
-<!-- CSS vars inlined for GitHub Pages (style.css not tracked) -->
+<!-- CSS vars + base reset inlined for GitHub Pages -->
 <style>
 /* ─── Design System: CSS Custom Properties ─── */
 :root {
@@ -33,6 +33,7 @@
   --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-cn: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  --font-body: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 [data-theme="dark"] {
   --bg: #080d1a;
@@ -53,6 +54,17 @@
   --border: #1e2d48;
   --border-light: #18243a;
 }
+/* ─── Base Reset (from style.css) ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+::selection { background: var(--accent); color: white; }
+a { color: inherit; text-decoration: none; }
 </style>
 <style>
 /* ════════════════════════════════════════════
