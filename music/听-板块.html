@@ -285,49 +285,49 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 <script>
 // ─── Data ──────────────────────────────────────
 const ARTISTS = [
-  {name:"陈奕迅",count:164},
+  {name:"陈奕迅",count:167},
+  {name:"林家谦",count:119},
   {name:"薛之谦",count:109},
-  {name:"周杰伦",count:103},
-  {name:"林家谦",count:76},
+  {name:"周杰伦",count:102},
   {name:"Taylor Swift",count:71},
-  {name:"Justin Bieber",count:62},
+  {name:"Justin Bieber",count:69},
   {name:"林俊杰",count:52},
-  {name:"陶喆",count:47},
+  {name:"陶喆",count:46},
   {name:"邓紫棋",count:34},
   {name:"Lauv",count:31},
   {name:"伦敦爱乐乐团 & 大卫·帕里",count:31},
   {name:"五月天",count:29},
   {name:"RADWIMPS",count:29},
   {name:"久石让 & 皇家爱乐管弦乐团",count:29},
+  {name:"方大同",count:27},
   {name:"Jeremy Zucker",count:26},
   {name:"Ed Sheeran",count:25},
-  {name:"方大同",count:24},
   {name:"Coldplay",count:23},
   {name:"Imagine Dragons",count:23},
   {name:"王菲",count:21}
 ];
 
 const TREASURES = [
-  {num:1,title:"囍帖街 (Live)",artist:"Eason Chan",plays:266,liked:true},
-  {num:2,title:"无条件 live",artist:"陈奕迅",plays:249,liked:true},
+  {num:1,title:"囍帖街 (Live)",artist:"Eason Chan",plays:271,liked:true},
+  {num:2,title:"无条件 live",artist:"陈奕迅",plays:255,liked:true},
   {num:3,title:"夕阳无限好",artist:"陈奕迅",plays:212,liked:true},
-  {num:4,title:"月",artist:"郁可唯",plays:205,liked:true},
+  {num:4,title:"月",artist:"郁可唯",plays:208,liked:true},
   {num:5,title:"Bitter Gourd",artist:"Eason Chan",plays:189,liked:true},
   {num:6,title:"十面埋伏",artist:"Eason Chan",plays:179,liked:true},
-  {num:7,title:"最佳损友",artist:"Eason Chan",plays:170,liked:true},
+  {num:7,title:"最佳损友",artist:"Eason Chan",plays:172,liked:true},
   {num:8,title:"简单爱",artist:"周杰伦",plays:156,liked:true},
   {num:9,title:"晴天",artist:"周杰伦",plays:156,liked:true},
-  {num:10,title:"单车",artist:"陈奕迅",plays:152,liked:true},
+  {num:10,title:"单车",artist:"陈奕迅",plays:153,liked:true},
   {num:11,title:"无人之境",artist:"陈奕迅",plays:135,liked:true},
-  {num:12,title:"阿牛",artist:"陈奕迅",plays:113,liked:true},
-  {num:13,title:"渐渐",artist:"陈奕迅 & Duo band",plays:108,liked:true},
+  {num:12,title:"阿牛",artist:"陈奕迅",plays:115,liked:true},
+  {num:13,title:"渐渐",artist:"陈奕迅 & eason and the duo band",plays:108,liked:true},
   {num:14,title:"多远都要在一起",artist:"邓紫棋",plays:96,liked:true},
   {num:15,title:"你的世界",artist:"林家谦",plays:94,liked:true},
   {num:16,title:"刹那的",artist:"Sabrina Cheung 张蔓莎",plays:94,liked:true},
-  {num:17,title:"Unity (Interlude)",artist:"陈奕迅 & Duo band",plays:91,liked:true},
+  {num:17,title:"Unity (Interlude)",artist:"陈奕迅 & eason and the duo band",plays:91,liked:true},
   {num:18,title:"星晴",artist:"周杰伦",plays:90,liked:true},
-  {num:19,title:"Chasing Fire",artist:"Lauv",plays:89,liked:true},
-  {num:20,title:"歌.颂",artist:"陈奕迅",plays:86,liked:true}
+  {num:19,title:"Chasing Fire",artist:"Lauv",plays:90,liked:true},
+  {num:20,title:"花海",artist:"周杰伦",plays:88,liked:true}
 ];
 
 const RATING_DIST = {"3": 1643, "4": 333, "5": 66, "2": 80, "1": 5, "0": 1228};
@@ -345,21 +345,21 @@ const YEAR_TOP_SONG = {
 };
 
 const RECENT_FAVS = [
-  {title:"一生中最爱 (Live)",artist:"陈奕迅",plays:16,date:"30/5/26"},
-  {title:"为你我受冷风吹",artist:"林忆莲",plays:11,date:"2/6/26"},
-  {title:"You",artist:"Lane 8 & Kasablanca",plays:11,date:"28/5/26"},
-  {title:"草原",artist:"",plays:10,date:"9/6/26"},
-  {title:"信心花舍",artist:"陈奕迅",plays:10,date:"5/6/26"},
-  {title:"离开以后 (Live)",artist:"张学友",plays:10,date:"5/6/26"},
-  {title:"志铭",artist:"犬儒乐队",plays:9,date:"23/6/26"},
-  {title:"Shall We Talk (Tre Lune MMXIX)",artist:"陈奕迅",plays:9,date:"11/6/26"},
-  {title:"Gas Station Diner",artist:"AGA",plays:9,date:"6/6/26"},
-  {title:"一生中最爱",artist:"谭咏麟",plays:8,date:"30/5/26"},
-  {title:"Don't You Know",artist:"LAUV",plays:7,date:"13/6/26"},
-  {title:"Encanto",artist:"Borrtex",plays:6,date:"28/5/26"},
-  {title:"病",artist:"犬儒乐队",plays:5,date:"23/6/26"},
-  {title:"纸飞机",artist:"永彬Ryan.B",plays:4,date:"13/6/26"},
-  {title:"玻璃",artist:"",plays:3,date:"27/6/26"},
+  {title:"草原",artist:"",plays:16,date:"9/6/26"},
+  {title:"信心花舍",artist:"陈奕迅",plays:16,date:"5/6/26"},
+  {title:"为你我受冷风吹",artist:"林忆莲",plays:14,date:"2/6/26"},
+  {title:"志铭",artist:"犬儒乐队",plays:13,date:"23/6/26"},
+  {title:"Shall We Talk (Tre Lune MMXIX)",artist:"陈奕迅",plays:13,date:"11/6/26"},
+  {title:"离开以后 (Live)",artist:"张学友",plays:13,date:"5/6/26"},
+  {title:"Gas Station Diner",artist:"AGA",plays:12,date:"6/6/26"},
+  {title:"玻璃",artist:"",plays:9,date:"27/6/26"},
+  {title:"Don't You Know",artist:"LAUV",plays:9,date:"13/6/26"},
+  {title:"Runaway (feat. Pusha T)",artist:"Kanye West & Pusha T",plays:7,date:"20/6/26"},
+  {title:"病",artist:"犬儒乐队",plays:6,date:"23/6/26"},
+  {title:"纸飞机",artist:"永彬Ryan.B",plays:6,date:"13/6/26"},
+  {title:"Shut Up and Dance",artist:"WALK THE MOON",plays:5,date:"13/6/26"},
+  {title:"Two As One",artist:"Da-iCE",plays:5,date:"13/6/26"},
+  {title:"Sugar",artist:"Chris James",plays:5,date:"13/6/26"},
 ];
 
 // ─── I18N ──────────────────────────────────────
