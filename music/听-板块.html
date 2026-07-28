@@ -2,8 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'></svg>">
+
 <title>听 · 音乐 — AutumnPants</title>
 <meta name="description" content="3355 首歌的听歌记录 — 艺人星系、五星珍藏、年度回望">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -171,8 +172,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
         <span class="lang-item" data-lang="hant">繁</span>
       </div>
       <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-        <svg viewBox="0 0 24 24" id="themeIconSun"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        <svg viewBox="0 0 24 24" id="themeIconMoon" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg viewBox="0 0 24 24" id="themeIconSun"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        <svg viewBox="0 0 24 24" id="themeIconMoon" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </button>
     </div>
   </div>
@@ -185,7 +186,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <section class="hero" id="hero">
       <div class="hero-content">
         <div class="hero-badge">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
           <span data-i18n="hero.badge">音乐档案</span>
         </div>
         <h1 data-i18n="hero.title">我的<span class="highlight">音乐</span>宇宙</h1>
@@ -209,7 +210,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <!-- ═══ Section 2: 艺人星系 ═══ -->
     <section class="section" id="sectionArtists">
       <div class="section-header">
-        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> <span data-i18n="artists.title">艺人星系</span></h2>
+        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/> <span data-i18n="artists.title">艺人星系</span></h2>
         <p data-i18n="artists.desc">播放列表中出镜率最高的 20 位歌手</p>
       </div>
       <div class="artist-grid" id="artistGrid"></div>
@@ -218,7 +219,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <!-- ═══ Section 3: 五星珍藏 ═══ -->
     <section class="section" id="sectionTreasures">
       <div class="section-header">
-        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><path d="M12 2L2 12l10 10 10-10L12 2z"/><path d="M12 2v20M2 12h20"/></svg> <span data-i18n="treasures.title">五星珍藏</span></h2>
+        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><path d="M12 2L2 12l10 10 10-10L12 2z"/><path d="M12 2v20M2 12h20"/> <span data-i18n="treasures.title">五星珍藏</span></h2>
         <p data-i18n="treasures.desc">获评 ★★★★★ 且反复聆听的经典之作</p>
       </div>
       <div class="treasure-list" id="treasureList"></div>
@@ -227,7 +228,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <!-- ═══ Section 4: 评分分布 ═══ -->
     <section class="section" id="sectionRating">
       <div class="section-header">
-        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span data-i18n="rating.title">评分分布</span></h2>
+        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/> <span data-i18n="rating.title">评分分布</span></h2>
         <p data-i18n="rating.desc">给每首歌的打分</p>
       </div>
       <div class="rating-stacked-wrap" id="ratingStackedWrap"></div>
@@ -236,7 +237,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <!-- ═══ Section 5: 年度趋势 ═══ -->
     <section class="section" id="sectionYearTrend">
       <div class="section-header">
-        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/></svg> <span data-i18n="yearTrend.title">年度趋势</span></h2>
+        <h2><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="7" width="4" height="14"/><rect x="17" y="3" width="4" height="18"/> <span data-i18n="yearTrend.title">年度趋势</span></h2>
         <p data-i18n="yearTrend.desc">每一年的音乐记忆</p>
       </div>
       <div class="card">
@@ -247,7 +248,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <!-- ═══ Section 6: 近年最爱 ═══ -->
     <section class="section" id="sectionRecent">
       <div class="section-header">
-        <h2 data-i18n="recent.title"><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> 本月最爱</h2>
+        <h2 data-i18n="recent.title"><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/> 本月最爱</h2>
         <p data-i18n="recent.desc">本月添加、播放量最高的歌曲</p>
       </div>
       <div class="recent-grid" id="recentGrid"></div>
@@ -256,7 +257,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     <!-- ═══ Section 6: 随机一碟 ═══ -->
     <section class="section" id="sectionShuffle">
       <div class="section-header">
-        <h2 data-i18n="shuffle.title"><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg> 随机一碟</h2>
+        <h2 data-i18n="shuffle.title"><svg viewBox="0 0 24 24" style="vertical-align:-3px;margin-right:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" width="1em" height="1em"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/> 随机一碟</h2>
         <p data-i18n="shuffle.desc">从 3355 首歌里随机抽出 3 首</p>
       </div>
       <div class="random-section">
