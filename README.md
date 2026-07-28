@@ -11,7 +11,7 @@
 | [contact.qijunhao.com](https://contact.qijunhao.com) | `AutumnPants_Website_contact` | 📬 联系方式 |
 | [photography.qijunhao.com](https://photography.qijunhao.com) | `AutumnPants_Website_photography` | 📷 摄影作品 |
 | [resume.qijunhao.com](https://resume.qijunhao.com) | `AutumnPants_Website_resume` | 📄 简历 |
-| [sport.qijunhao.com](https://sport.qijunhao.com) | `AutumnPants_Website_sports` | 🏃 运动记录 |
+| [sport.qijunhao.com](https://sport.qijunhao.com) | `AutumnPants_Website_sport` | 🏃 运动记录 |
 | [travel.qijunhao.com](https://travel.qijunhao.com) | `AutumnPants_Website_travel` | 🌍 旅行足迹 |
 | [qijunhao.xyz](https://qijunhao.xyz) | `Project-Hub` | 🔗 项目枢纽 |
 

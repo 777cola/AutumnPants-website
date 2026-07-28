@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>运动 — 戚俊皓</title>
+  <meta name="description" content="戚俊皓的运动世界 — 羽毛球、高尔夫、滑雪，在球场上燃烧，在雪道上飞驰">
+  <meta property="og:title" content="运动 | 戚俊皓">
+  <meta property="og:description" content="在球场上燃烧，在雪道上飞驰">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♌</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
+    /* ─── Stats Cards ──────────────────────────── */
+    .sports-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .sports-stats .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      transition: all var(--transition);
+    }
+    .sports-stats .stat-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-border);
+      transform: translateY(-4px);
+    }
+    .sports-stats .stat-card .stat-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .sports-stats .stat-card .stat-label {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ─── Sport Cards ──────────────────────────── */
+    .sports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .sport-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .sport-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-border);
+      transform: translateY(-4px);
+    }
+    .sport-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .sport-card:hover::before { transform: scaleX(1); }
+
+    .sport-card .badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: var(--accent);
+      color: white;
+      letter-spacing: 0.04em;
+    }
+    .sport-card .sport-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .sport-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      font-family: var(--font-cn);
+    }
+    .sport-card .sport-level {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      font-family: var(--font-mono);
+    }
+    .sport-card .sport-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .sport-card .sport-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .sport-card .sport-tags span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: var(--accent-subtle);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+
+    /* ─── Photo Placeholder ────────────────────── */
+    .photo-placeholder {
+      margin-top: 2.5rem;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 3.5rem 2rem;
+      text-align: center;
+      transition: all var(--transition);
+      background: var(--surface);
+    }
+    .photo-placeholder:hover {
+      border-color: var(--accent-border);
+      background: var(--accent-subtle);
+    }
+    .photo-placeholder .placeholder-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.6;
+    }
+    .photo-placeholder .placeholder-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .photo-placeholder .placeholder-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ─── Responsive ───────────────────────────── */
+    @media (max-width: 768px) {
+      .sports-stats { grid-template-columns: 1fr; }
+      .sports-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">QI JUNHAO<span class="dot">.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html" data-i18n="nav.home">首页</a></li>
+        <li><a href="../music/" data-i18n="nav.music">音乐</a></li>
+        <li><a href="../travel/" data-i18n="nav.travel">旅行</a></li>
+        <li><a href="../photography/" data-i18n="nav.photo">摄影</a></li>
+        <li><a href="../sports/" class="active" data-i18n="nav.sports">运动</a></li>
+        <li><a href="../resume/" data-i18n="nav.resume">简历</a></li>
+        <li><a href="../contact/" data-i18n="nav.contact">联系</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-toggle" id="langToggle">
+          <span class="lang-item active" data-lang="zh">简</span>
+          <span class="lang-item" data-lang="en">EN</span>
+          <span class="lang-item" data-lang="hant">繁</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
+        <button class="nav-toggle" id="navToggle" aria-label="菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header" style="position:relative;z-index:2;">
+    <div class="page-header-inner">
+      <span class="page-icon reveal reveal-delay-1">🏸</span>
+      <h1 class="reveal reveal-delay-2">运动</h1>
+      <p class="page-desc reveal reveal-delay-3">在球场上燃烧，在雪道上飞驰</p>
+    </div>
+  </section>
+
+  <!-- Section 1: Sports Stats -->
+  <section class="section" style="position:relative;z-index:2;">
+    <div class="section-inner">
+      <div class="sports-stats reveal">
+        <div class="stat-card">
+          <div class="stat-num">90</div>
+          <div class="stat-label">高尔夫杆数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">60+</div>
+          <div class="stat-label">羽毛球赛事组织人数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5</div>
+          <div class="stat-label">涉猎运动种类</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: My Sports -->
+  <section class="section" style="position:relative;z-index:2;">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <h2>我的运动</h2>
+        <p class="section-desc">从羽毛球到高尔夫，从雪道到球场</p>
+      </div>
+
+      <div class="sports-grid reveal reveal-delay-1">
+        <!-- Card 1: 羽毛球 (主力) -->
+        <div class="sport-card">
+          <span class="badge">主力</span>
+          <span class="sport-icon">🏸</span>
+          <h3>羽毛球 — 主力 · 校队水平</h3>
+          <div class="sport-level">商院羽毛球队负责人</div>
+          <p class="sport-desc">
+            策划开展商学院羽毛球比赛，组织约60名参赛队员进行赛事
+          </p>
+          <div class="sport-tags">
+            <span>单打</span>
+            <span>双打</span>
+            <span>赛事组织</span>
+          </div>
+        </div>
+
+        <!-- Card 2: 高尔夫 (主力) -->
+        <div class="sport-card">
+          <span class="badge">主力</span>
+          <span class="sport-icon">⛳</span>
+          <h3>高尔夫 — 主力 · 90杆</h3>
+          <div class="sport-level">享受在绿茵场上的专注与挑战</div>
+          <p class="sport-desc">
+            在绿茵场上感受每一杆的专注与节奏，享受挑战自我的乐趣
+          </p>
+          <div class="sport-tags">
+            <span>18洞</span>
+            <span>推杆练习</span>
+          </div>
+        </div>
+
+        <!-- Card 3: 滑雪 (主力) -->
+        <div class="sport-card">
+          <span class="badge">主力</span>
+          <span class="sport-icon">⛷️</span>
+          <h3>滑雪 — 主力 · 进阶中</h3>
+          <div class="sport-level">热爱速度与自由</div>
+          <p class="sport-desc">
+            从雪道飞驰而下，享受速度带来的快感与山野的自由
+          </p>
+          <div class="sport-tags">
+            <span>双板</span>
+            <span>单板</span>
+          </div>
+        </div>
+
+        <!-- Card 4: 网球 (入门) -->
+        <div class="sport-card">
+          <span class="sport-icon">🎾</span>
+          <h3>网球 — 入门 · 兴趣爱好</h3>
+          <div class="sport-level">享受运动带来的活力与社交</div>
+          <p class="sport-desc">
+            在球场上挥洒汗水，感受每一次击球的畅快
+          </p>
+          <div class="sport-tags">
+            <span>业余</span>
+          </div>
+        </div>
+
+        <!-- Card 5: 乒乓球 (入门) -->
+        <div class="sport-card">
+          <span class="sport-icon">🏓</span>
+          <h3>乒乓球 — 入门 · 兴趣爱好</h3>
+          <div class="sport-level">国球自然不能不会</div>
+          <p class="sport-desc">
+            作为中国人，国球自然不能不会，感受小球转动大球的乐趣
+          </p>
+          <div class="sport-tags">
+            <span>业余</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo Placeholder -->
+      <div class="photo-placeholder reveal reveal-delay-2">
+        <div class="placeholder-icon">📸</div>
+        <div class="placeholder-text">运动照片即将上线</div>
+        <div class="placeholder-hint">球场上的精彩瞬间正在整理中...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" style="position:relative;z-index:2;">
+    <div class="footer-inner">
+      <div class="footer-logo">QI JUNHAO<span class="dot">.</span></div>
+      <p class="footer-text">© 2026 戚俊皓 · 华东理工大学金融专业</p>
+      <div class="footer-links">
+        <a href="../music/">音乐</a>
+        <a href="../travel/">旅行</a><a href="../photography/">摄影</a>
+        <a href="../sports/">运动</a><a href="../resume/">简历</a>
+        <a href="../contact/">联系</a><a href="../index.html">首页</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="回到顶部">↑</button>
+
+  <script src="../common.js"></script>
+</body>
+</html>

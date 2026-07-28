@@ -2,9 +2,78 @@
    COMMON JS — 戚俊皓 | Personal Website v3
    ===================================================== */
 
+// ─── I18N Translations (nav links only) ─────────────
+const NAV_I18N = {
+  zh: {
+    'nav.home': '首页',
+    'nav.music': '音乐',
+    'nav.travel': '旅行',
+    'nav.photo': '摄影',
+    'nav.sports': '运动',
+    'nav.resume': '简历',
+    'nav.contact': '联系',
+  },
+  en: {
+    'nav.home': 'Home',
+    'nav.music': 'Music',
+    'nav.travel': 'Travel',
+    'nav.photo': 'Photography',
+    'nav.sports': 'Sports',
+    'nav.resume': 'Resume',
+    'nav.contact': 'Contact',
+  },
+  hant: {
+    'nav.home': '首頁',
+    'nav.music': '音樂',
+    'nav.travel': '旅行',
+    'nav.photo': '攝影',
+    'nav.sports': '運動',
+    'nav.resume': '簡歷',
+    'nav.contact': '聯繫',
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'zh';
+
+function applyLang() {
+  const lang = currentLang;
+  document.documentElement.lang = lang === 'hant' ? 'zh-TW' : (lang === 'en' ? 'en' : 'zh-CN');
+  // Translate data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const text = NAV_I18N[lang]?.[key];
+    if (text) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = text;
+      } else {
+        el.textContent = text;
+      }
+    }
+  });
+  // Update lang toggle active state
+  document.querySelectorAll('.lang-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.lang === lang);
+  });
+}
+
+function initLangToggle() {
+  const toggle = document.getElementById('langToggle');
+  if (!toggle) return;
+  toggle.querySelectorAll('.lang-item').forEach(item => {
+    item.addEventListener('click', () => {
+      currentLang = item.dataset.lang;
+      localStorage.setItem('lang', currentLang);
+      applyLang();
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
+  // ─── Apply saved language ──────────────────────────
+  applyLang();
+  initLangToggle();
 
   // ─── Theme Toggle ────────────────────────────────
   const themeToggle = document.getElementById('themeToggle');

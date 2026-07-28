@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://qijunhao.com/sitemap.xml
