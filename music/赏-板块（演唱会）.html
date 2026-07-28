@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'></svg>">
 <title>赏 · 音乐 — AutumnPants</title>
 <style>
 /* ═══════════════════════════════════════════════════════
@@ -934,28 +935,42 @@ concerts.forEach((c,i)=>{
     if(inner){inner.style.position='relative';inner.style.zIndex='2';}
   }
 
-  // ── 加载照片贴纸 ──
+  // ── 加载照片贴纸（先缩略图，点击再看原图） ──
   c.photos.forEach((fname,pi)=>{
-    const src=`${c.folder}/${fname}`;
+    const dot=fname.lastIndexOf('.');
+    const thumbName=dot>-1?`thumb_${fname.slice(0,dot)}${fname.slice(dot)}`:`thumb_${fname}`;
+    const thumbSrc=`${c.folder}/${thumbName}`;
+    const fullSrc=`${c.folder}/${fname}`;
     const img=new Image();
     img.onload=()=>{
       const sticker=document.createElement('div');
       sticker.className='photo-sticker';
       sticker.style.transitionDelay=`${pi*.07}s`;
       const im=document.createElement('img');
-      im.src=src;
+      im.src=thumbSrc;
       im.alt=`${c.artist} ${c.date}`;
       sticker.appendChild(im);
-      // click to view full
-      sticker.addEventListener('click',()=>openFsImg(src));
+      sticker.addEventListener('click',()=>openFsImg(fullSrc));
       photosRow.appendChild(sticker);
-      // trigger visible
       setTimeout(()=>sticker.classList.add('visible'),40);
+      // preload full-res after sticker shows
+      const preload=new Image();
+      preload.src=fullSrc;
     };
     img.onerror=()=>{
-      // silently skip broken images
+      // fallback: load full-res directly
+      const sticker=document.createElement('div');
+      sticker.className='photo-sticker';
+      sticker.style.transitionDelay=`${pi*.07}s`;
+      const im=document.createElement('img');
+      im.src=fullSrc;
+      im.alt=`${c.artist} ${c.date}`;
+      sticker.appendChild(im);
+      sticker.addEventListener('click',()=>openFsImg(fullSrc));
+      photosRow.appendChild(sticker);
+      setTimeout(()=>sticker.classList.add('visible'),40);
     };
-    img.src=src;
+    img.src=thumbSrc;
   });
 
   // ── 加载视频背景 ──
