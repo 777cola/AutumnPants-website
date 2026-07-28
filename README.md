@@ -1,33 +1,20 @@
-# 🏠 AutumnPants · Personal Website
+# AutumnPants · 个人网站
 
-> qijunhao.com — Qi JunHao 的个人主页
+> [qijunhao.com](https://qijunhao.com) — 戚俊皓的个人主页
 
-## 子域名模块
+## 简介
 
-| 子域名 | 仓库 | 内容 |
-|--------|------|------|
-| [qijunhao.com](https://qijunhao.com) | `AutumnPants-website` | 主站首页 |
-| [music.qijunhao.com](https://music.qijunhao.com) | `AutumnPants_Website_music` | 🎵 音乐 — 听/赏/演/创 |
-| [contact.qijunhao.com](https://contact.qijunhao.com) | `AutumnPants_Website_contact` | 📬 联系方式 |
-| [photography.qijunhao.com](https://photography.qijunhao.com) | `AutumnPants_Website_photography` | 📷 摄影作品 |
-| [resume.qijunhao.com](https://resume.qijunhao.com) | `AutumnPants_Website_resume` | 📄 简历 |
-| [sport.qijunhao.com](https://sport.qijunhao.com) | `AutumnPants_Website_sport` | 🏃 运动记录 |
-| [travel.qijunhao.com](https://travel.qijunhao.com) | `AutumnPants_Website_travel` | 🌍 旅行足迹 |
-| [qijunhao.xyz](https://qijunhao.xyz) | `Project-Hub` | 🔗 项目枢纽 |
+个人网站的入口首页，通过 CardSwap 卡片交互展示各个子板块。
 
-## 本地开发
+## 相关子站
 
-```bash
-# 这个仓库是主站
-python3 -m http.server 8000
-```
+- [music.qijunhao.com](https://music.qijunhao.com) — 音乐（听/赏/演/创）
+- [travel.qijunhao.com](https://travel.qijunhao.com) — 旅行
+- [photography.qijunhao.com](https://photography.qijunhao.com) — 摄影
+- [sport.qijunhao.com](https://sport.qijunhao.com) — 运动
+- [resume.qijunhao.com](https://resume.qijunhao.com) — 简历
+- [contact.qijunhao.com](https://contact.qijunhao.com) — 联系
 
-## 部署
+## 构建
 
-每个子域名对应一个独立 GitHub Pages 仓库，推送 `main` 分支自动部署。
-
-GitHub Pages 配置：每个仓库的 Pages 设置已绑定各自 CNAME 自定义域名。
-
----
-
-© 2025 [Qi JunHao](https://qijunhao.com)
+纯静态 HTML + CSS + JavaScript，通过 GitHub Pages 部署。
