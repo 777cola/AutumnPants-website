@@ -10,7 +10,7 @@ const NAV_I18N = {
     'nav.travel': '旅行',
     'nav.photo': '摄影',
     'nav.sports': '运动',
-    'nav.resume': '简历',
+    'nav.resume': '履历',
     'nav.contact': '联系',
   },
   en: {
@@ -28,7 +28,7 @@ const NAV_I18N = {
     'nav.travel': '旅行',
     'nav.photo': '攝影',
     'nav.sports': '運動',
-    'nav.resume': '簡歷',
+    'nav.resume': '履歷',
     'nav.contact': '聯繫',
   }
 };
