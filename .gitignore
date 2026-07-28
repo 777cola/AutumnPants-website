@@ -6,3 +6,6 @@ music/shadergradient-dot-co-参考页面.html
 
 # Music submodule — now in AutumnPants_Website_music
 music/
+
+# Git worktrees (local only)
+.worktrees/
