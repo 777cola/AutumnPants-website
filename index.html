@@ -3,38 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AutumnPants · Qi JunHao</title>
+<title id="pageTitle">Qi JunHao · AutumnPants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==">
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-inner">
-    <h1>Qi JunHao</h1>
-    <p class="tagline">AutumnPants · 研究员 · 开发者 · 音乐人</p>
-    <nav class="main-nav">
-      <a href="https://music.qijunhao.com">音乐</a>
-      <a href="https://travel.qijunhao.com">旅行</a>
-      <a href="https://photography.qijunhao.com">摄影</a>
-      <a href="https://sport.qijunhao.com">运动</a>
-      <a href="https://resume.qijunhao.com">简历</a>
-      <a href="https://contact.qijunhao.com">联系</a>
-    </nav>
-    <div class="hero-utils">
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Qi JunHao<span class="dot">.</span></a>
+
+    <div class="nav-gooey" id="navGooey"></div>
+
+    <div class="nav-right">
       <div class="lang-toggle" id="langToggle">
-        <span class="lang-item active" data-lang="zh">简</span>
-        <span class="lang-item" data-lang="en">EN</span>
-        <span class="lang-item" data-lang="hant">繁</span>
+        <span class="lang-item" data-lang="zh" data-full="简体中文">简</span>
+        <span class="lang-item" data-lang="en" data-full="English">EN</span>
+        <span class="lang-item" data-lang="hant" data-full="繁體中文">繁</span>
       </div>
-      <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
+      <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
     </div>
   </div>
-</header>
+</nav>
 
-<footer>
-  <p>© 2025 Qi JunHao</p>
-</footer>
+<!-- ============ CARD SWAP (full page) ============ -->
+<div class="card-swap-section" style="position:relative;min-height:100vh">
 
+  <!-- Hero text on left -->
+  <div class="hero-text">
+    <div class="hero-greeting" data-i18n="hero.greeting">Halo</div>
+    <div class="hero-line" data-i18n="hero.line1">欢迎来到我的个人网站</div>
+    <div class="hero-line" data-i18n="hero.line2">在这里</div>
+    <div class="hero-line" data-i18n="hero.line3">你将看到我</div>
+    <div class="hero-typing-wrap">
+      <span class="hero-typing" id="heroTyping"></span>
+      <span class="hero-cursor">|</span>
+    </div>
+  </div>
+
+  <div class="card-swap-container" id="cardSwapContainer"></div>
+</div>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
+<script src="gooey-nav.js"></script>
+<script src="card-swap.js"></script>
 <script src="common.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+
+  // ─── I18N Translations ──────────────────────────────
+  var I18N = {
+    zh: {
+      'hero.greeting':'Halo',
+      'hero.line1':'欢迎来到我的个人网站',
+      'hero.line2':'在这里',
+      'hero.line3':'你将看到我',
+      'hero.type1':'对音乐的热爱',
+      'hero.type2':'对远方的向往',
+      'hero.type3':'对光影的捕捉',
+      'hero.type4':'对自由的享受',
+      'hero.type5':'对成长的记录',
+      'nav.home':'首页','nav.music':'音乐','nav.travel':'旅行',
+      'nav.photo':'摄影','nav.sport':'运动','nav.resume':'履历',
+      'nav.contact':'联系',
+      'card.music':'音乐','card.travel':'旅行','card.photo':'摄影',
+      'card.sport':'运动','card.resume':'履历','card.contact':'联系',
+      'card.cta':'探索 →',
+      'card.building':'网站制作中',
+      'theme.aria':'切换主题',
+      'title':'Qi JunHao · AutumnPants',
+    },
+    en: {
+      'hero.greeting':'Halo',
+      'hero.line1':'Welcome to my personal site',
+      'hero.line2':'Here',
+      'hero.line3':'You will find me',
+      'hero.type1':'Passion for music',
+      'hero.type2':'Yearning for faraway lands',
+      'hero.type3':'Capturing light and shadow',
+      'hero.type4':'Enjoying freedom',
+      'hero.type5':'Documenting growth',
+      'nav.home':'Home','nav.music':'Music','nav.travel':'Travel',
+      'nav.photo':'Photography','nav.sport':'Sport','nav.resume':'Resume',
+      'nav.contact':'Contact',
+      'card.music':'Music','card.travel':'Travel','card.photo':'Photography',
+      'card.sport':'Sport','card.resume':'Resume','card.contact':'Contact',
+      'card.cta':'Explore →',
+      'card.building':'Under Construction',
+      'theme.aria':'Toggle theme',
+      'title':'Qi JunHao · AutumnPants',
+    },
+    hant: {
+      'hero.greeting':'Halo',
+      'hero.line1':'歡迎來到我的個人網站',
+      'hero.line2':'在這裡',
+      'hero.line3':'你將看到我',
+      'hero.type1':'對音樂的熱愛',
+      'hero.type2':'對遠方的嚮往',
+      'hero.type3':'對光影的捕捉',
+      'hero.type4':'對自由的享受',
+      'hero.type5':'對成長的記錄',
+      'nav.home':'首頁','nav.music':'音樂','nav.travel':'旅行',
+      'nav.photo':'攝影','nav.sport':'運動','nav.resume':'履歷',
+      'nav.contact':'聯繫',
+      'card.music':'音樂','card.travel':'旅行','card.photo':'攝影',
+      'card.sport':'運動','card.resume':'履歷','card.contact':'聯繫',
+      'card.cta':'探索 →',
+      'card.building':'網站製作中',
+      'theme.aria':'切換主題',
+      'title':'Qi JunHao · AutumnPants',
+    }
+  };
+
+  var NAV_KEYS  = ['nav.home','nav.music','nav.travel','nav.photo','nav.sport','nav.resume','nav.contact'];
+  var CARD_KEYS = ['card.music','card.travel','card.photo','card.sport','card.resume','card.contact'];
+
+  function getCurrentLang() {
+    return localStorage.getItem('lang') || 'zh';
+  }
+
+  function t(key, lang) {
+    return (I18N[lang] && I18N[lang][key]) || I18N['zh'][key] || key;
+  }
+
+  // ─── Apply translations ─────────────────────────────
+  function applyI18N(lang) {
+    // 1) Static data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      var txt = t(key, lang);
+      if (txt) el.innerHTML = txt;
+    });
+
+    // 2) Document title
+    document.title = t('title', lang);
+
+    // 3) Theme toggle aria-label
+    var themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) themeBtn.setAttribute('aria-label', t('theme.aria', lang));
+
+    // 4) GooeyNav link labels
+    var navLinks = document.querySelectorAll('.gooey-nav-container nav ul li a');
+    navLinks.forEach(function (a, i) {
+      if (NAV_KEYS[i]) a.textContent = t(NAV_KEYS[i], lang);
+    });
+
+    // 5) CardSwap — card labels
+    var cardLabels = document.querySelectorAll('.card-swap-container .card .card-label');
+    cardLabels.forEach(function (label, i) {
+      if (CARD_KEYS[i]) label.textContent = t(CARD_KEYS[i], lang);
+    });
+
+    // 6) CardSwap — CTAs
+    document.querySelectorAll('.card-cta').forEach(function (cta) {
+      cta.textContent = t('card.cta', lang);
+    });
+
+    // 7) Card body — "Under Construction" text
+    var buildingText = t('card.building', lang);
+    document.querySelectorAll('.card-body').forEach(function (body) {
+      var bodyText = body.textContent.trim();
+      if (bodyText === '网站制作中' || bodyText === 'Under Construction' || bodyText === '網站製作中') {
+        body.textContent = buildingText;
+      }
+    });
+
+    // 8) Restart typewriter with translated phrases
+    restartTypewriter(t, lang);
+  }
+
+  // ─── Hero typewriter ──────────────────────────────────
+  var typingEl = document.getElementById('heroTyping');
+  var typingTimer = null;
+
+  function restartTypewriter(translateFn, lang) {
+    if (typingTimer) { clearTimeout(typingTimer); typingTimer = null; }
+    if (!typingEl) return;
+
+    var phrases = [
+      translateFn('hero.type1', lang),
+      translateFn('hero.type2', lang),
+      translateFn('hero.type3', lang),
+      translateFn('hero.type4', lang),
+      translateFn('hero.type5', lang),
+    ];
+    var idx = 0;
+    var charIdx = 0;
+    var isDeleting = false;
+    var speed = 80;
+
+    function tick() {
+      var phrase = phrases[idx];
+
+      if (!isDeleting) {
+        typingEl.textContent = phrase.slice(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === phrase.length) {
+          isDeleting = true;
+          typingTimer = setTimeout(tick, 2000);
+          return;
+        }
+        typingTimer = setTimeout(tick, speed + (Math.random() * 40));
+      } else {
+        typingEl.textContent = phrase.slice(0, charIdx - 1);
+        charIdx--;
+        if (charIdx === 0) {
+          isDeleting = false;
+          idx = (idx + 1) % phrases.length;
+          typingTimer = setTimeout(tick, 400);
+          return;
+        }
+        typingTimer = setTimeout(tick, speed * 0.5 + (Math.random() * 20));
+      }
+    }
+
+    typingEl.textContent = '';
+    tick();
+  }
+
+  // ─── Listen for lang changes from common.js ───────────
+  document.addEventListener('langchange', function (e) {
+    if (e.detail && e.detail.lang) applyI18N(e.detail.lang);
+  });
+
+  // ─── Initialize with current language ─────────────────
+  var initialLang = getCurrentLang();
+  applyI18N(initialLang);
+
+  // ─── GooeyNav ───────────────────────────────────
+  var gooeyContainer = document.getElementById('navGooey');
+  if (gooeyContainer) {
+    window.GooeyNav(gooeyContainer, {
+      items: [
+        { label: t('nav.home', initialLang), href: 'https://qijunhao.com' },
+        { label: t('nav.music', initialLang), href: 'https://music.qijunhao.com' },
+        { label: t('nav.travel', initialLang), href: 'https://travel.qijunhao.com' },
+        { label: t('nav.photo', initialLang), href: 'https://photography.qijunhao.com' },
+        { label: t('nav.sport', initialLang), href: 'https://sport.qijunhao.com' },
+        { label: t('nav.resume', initialLang), href: 'https://resume.qijunhao.com' },
+        { label: t('nav.contact', initialLang), href: 'https://contact.qijunhao.com' },
+      ],
+      animationTime: 600,
+      particleCount: 12,
+    });
+  }
+
+  // ─── CardSwap ──────────────────────────────────
+  var swapContainer = document.getElementById('cardSwapContainer');
+  if (swapContainer && typeof window.CardSwap === 'function') {
+    window.CardSwap(swapContainer, {
+      items: [
+        { text: t('card.music', initialLang), label: t('card.music', initialLang), accent: '#3B82F6', icon: 'note',  image: 'music.png',    href: 'https://music.qijunhao.com' },
+        { text: t('card.travel', initialLang), label: t('card.travel', initialLang), accent: '#10B981', icon: 'map',                         href: 'https://travel.qijunhao.com' },
+        { text: t('card.photo', initialLang), label: t('card.photo', initialLang), accent: '#F59E0B', icon: 'camera',                      href: 'https://photography.qijunhao.com' },
+        { text: t('card.sport', initialLang), label: t('card.sport', initialLang), accent: '#8B5CF6', icon: 'run',                         href: 'https://sport.qijunhao.com' },
+        { text: t('card.resume', initialLang), label: t('card.resume', initialLang), accent: '#64748B', icon: 'doc',   image: 'resume.png',   href: 'https://resume.qijunhao.com' },
+        { text: t('card.contact', initialLang), label: t('card.contact', initialLang), accent: '#EC4899', icon: 'mail',  image: 'contact.png',  href: 'https://contact.qijunhao.com' },
+      ],
+      width: 930,
+      height: 720,
+      cardDistance: 75,
+      verticalDistance: 80,
+      skewAmount: 12,
+      onCardClick: function(idx, item) {},
+    });
+  }
+});
+</script>
 </body>
 </html>
