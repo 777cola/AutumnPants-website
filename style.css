@@ -332,36 +332,6 @@ img { max-width: 100%; height: auto; display: block; }
   background: var(--accent-subtle);
 }
 
-/* ─── Language Toggle ──────────────────────────────── */
-.lang-toggle {
-  display: flex;
-  align-items: center;
-  height: 30px;
-  background: var(--accent-subtle);
-  border-radius: 20px;
-  padding: 2px;
-  gap: 0;
-  border: 1px solid var(--accent-border);
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-.lang-toggle:hover { border-color: var(--accent); }
-.lang-item {
-  padding: 3px 8px;
-  font-size: .72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  transition: all .2s;
-  white-space: nowrap;
-  border-radius: 16px;
-  cursor: pointer;
-  user-select: none;
-  font-family: var(--font-body);
-  line-height: 1.4;
-}
-.lang-item.active { background: var(--accent); color: #fff; }
-.lang-item:not(.active):hover { color: var(--accent); }
-
 .nav-toggle {
   display: none;
   width: 38px;
