@@ -18,6 +18,11 @@
   };
   function getIcon(name) { return ICONS[name] || ICONS.note; }
 
+  function hexToRgba(hex, alpha) {
+    var n = parseInt(hex.replace('#', ''), 16);
+    return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + alpha + ')';
+  }
+
   /* ─── Slot math (exact original) ─── */
   function makeSlot(i, distX, distY, total) {
     return { x: i * distX, y: -i * distY, z: -i * distX * 1.5, zIndex: total - i };
@@ -109,6 +114,39 @@
       var ctaEl = hdr.querySelector('.card-cta');
       ctas.push(ctaEl);
 
+      /* === CTA "探索" click: press animation + navigate === */
+      ctaEl.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (ctaEl.dataset.navigating === '1') return;
+        // Safety: if this card is NOT at the front, only bring it forward (no navigation)
+        if (order[0] !== idx) { bringToFront(idx); return; }
+        ctaEl.dataset.navigating = '1';
+
+        var accent = item.accent || '#3B82F6';
+        var glow = hexToRgba(accent, 0.45);
+
+        gsap.timeline()
+          .to(card, {
+            scale: 1.03,
+            boxShadow: '0 18px 60px ' + glow,
+            duration: 0.25,
+            ease: 'power2.out',
+          }, 0)
+          .to(ctaEl, {
+            backgroundColor: accent,
+            color: '#ffffff',
+            borderColor: accent,
+            scale: 1.08,
+            x: 8,
+            duration: 0.3,
+            ease: 'power2.out',
+          }, 0);
+
+        setTimeout(function () {
+          if (item.href) window.location.href = item.href;
+        }, 600);
+      });
+
       /* === Card Body === */
       var body = document.createElement('div');
       body.className = 'card-body';
@@ -136,7 +174,7 @@
         if (onCardClick) onCardClick(idx, item);
       });
 
-      initPixelHover(card, canvas, width, height);
+      initPixelHover(ctaEl, card, canvas, width, height);
     });
 
     /* ─── Initial placement ─── */
@@ -216,8 +254,8 @@
       });
     }
 
-    /* ─── PixelCard hover ─── */
-    function initPixelHover(card, canvas, w, h) {
+    /* ─── PixelCard hover — triggered by CTA only ─── */
+    function initPixelHover(trigger, card, canvas, w, h) {
       var ctx = canvas.getContext('2d');
       var pixels = [];
       var animId = null;
@@ -292,12 +330,12 @@
         if (allIdle) { cancelAnimationFrame(animId); running = false; }
       }
 
-      card.addEventListener('mouseenter', function () {
+      trigger.addEventListener('mouseenter', function () {
         if (running) cancelAnimationFrame(animId);
         running = true; timePrev = performance.now();
         animId = requestAnimationFrame(function () { doAnimate('appear'); });
       });
-      card.addEventListener('mouseleave', function () {
+      trigger.addEventListener('mouseleave', function () {
         if (running) cancelAnimationFrame(animId);
         running = true; timePrev = performance.now();
         animId = requestAnimationFrame(function () { doAnimate('disappear'); });

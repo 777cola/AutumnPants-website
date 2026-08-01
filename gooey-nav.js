@@ -15,7 +15,22 @@
     var particleR = opts.particleR || 100;
     var timeVariance = opts.timeVariance || 300;
     var colors = opts.colors || [1, 2, 3, 1, 2, 3, 1, 4];
-    var initialActiveIndex = opts.initialActiveIndex || 0;
+    var initialActiveIndex = opts.initialActiveIndex;
+    if (initialActiveIndex === undefined || initialActiveIndex < 0) {
+      // Auto-detect active item from current page (hostname online, pathname locally)
+      var _host = location.hostname;
+      var _seg = (location.pathname.split('/')[1] || '').replace(/^sports$/, 'sport');
+      items.forEach(function (item, i) {
+        if (initialActiveIndex !== undefined) return;
+        var href = item.href || '';
+        if ((_host !== '127.0.0.1' && _host !== 'localhost') && href.indexOf(_host) !== -1) {
+          initialActiveIndex = i;
+        } else if (_seg && href.indexOf('//' + _seg + '.qijunhao.com') !== -1) {
+          initialActiveIndex = i;
+        }
+      });
+      if (initialActiveIndex === undefined) initialActiveIndex = 0;
+    }
 
     var activeIndex = initialActiveIndex;
     var navEl, filterEl, textEl;
