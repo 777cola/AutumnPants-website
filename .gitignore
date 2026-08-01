@@ -1,8 +1,24 @@
 CLAUDE.md
 .DS_Store
 node_modules/
-music/乐队（个人）演出/
-music/shadergradient-dot-co-参考页面.html
 
-# Music submodule — now in AutumnPants_Website_music
+# Subdomain pages — now in separate repos
 music/
+travel/
+photography/
+sports/
+resume/
+about/
+contact/
+
+# Git worktrees (local only)
+.worktrees/
+
+# Cloned subdomain repos (local copies)
+AutumnPants_Website_*/
+
+# Dev artifacts
+components.json
+package.json
+pnpm-lock.yaml
+首页照片/

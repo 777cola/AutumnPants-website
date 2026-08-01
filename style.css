@@ -162,6 +162,82 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ============================================================
+   HOMEPAGE HERO
+   ============================================================ */
+.hero {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+.hero-inner {
+  max-width: 600px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+.hero .tagline {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+.hero .main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.hero .main-nav a {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+}
+.hero .main-nav a:hover {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-subtle);
+  transform: translateY(-2px);
+}
+.hero-utils {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.hero-utils .theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+.hero-utils .theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-subtle);
+}
+
+/* ============================================================
    NAVIGATION
    ============================================================ */
 .navbar {
@@ -918,10 +994,11 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .card-cta {
-  margin-left: 10px;
+  margin-left: 20px;
   font-size: 0.78rem;
   font-weight: 700;
   opacity: 0;
+  cursor: pointer;
   transition: opacity 0.3s ease;
   white-space: nowrap;
   padding: 2px 10px;
@@ -932,6 +1009,10 @@ img { max-width: 100%; height: auto; display: block; }
 
 .card-cta.active {
   opacity: 1;
+}
+
+.card-cta.active:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Card body — the main visual area */

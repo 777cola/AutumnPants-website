@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var CARD_KEYS = ['card.music','card.travel','card.photo','card.sport','card.resume','card.contact'];
 
   function getCurrentLang() {
-    return localStorage.getItem('lang') || 'zh';
+    return Prefs.get('lang') || 'zh';
   }
 
   function t(key, lang) {

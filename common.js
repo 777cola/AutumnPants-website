@@ -1,3 +1,26 @@
+;(function () {
+  /* PREFS — cross-subdomain shared prefs (cookie .qijunhao.com + localStorage) */
+  function prefDomain() {
+    var h = location.hostname;
+    return (h === 'qijunhao.com' || h.slice(-13) === '.qijunhao.com') ? '; domain=.qijunhao.com' : '';
+  }
+  function setPref(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+    try { document.cookie = key + '=' + encodeURIComponent(value) + '; path=/; max-age=31536000' + prefDomain(); } catch (e) {}
+  }
+  function getPref(key) {
+    try {
+      var v = localStorage.getItem(key);
+      if (v !== null) { setPref(key, v); return v; }
+    } catch (e) {}
+    try {
+      var m = document.cookie.match(new RegExp('(?:^|; )' + key + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    } catch (e) { return null; }
+  }
+  window.Prefs = { get: getPref, set: setPref };
+})();
+
 /* =====================================================
    COMMON JS — 戚俊皓 | Personal Website v3
    ===================================================== */
@@ -13,7 +36,7 @@
 
     // ─── Theme Toggle ────────────────────────────────
     var themeToggle = document.getElementById('themeToggle');
-    var savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    var savedTheme = Prefs.get(THEME_KEY) || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     if (themeToggle) updateThemeIcon(savedTheme);
 
@@ -23,7 +46,7 @@
         var next = current === 'dark' ? 'light' : 'dark';
         document.documentElement.classList.add('theme-transitioning');
         document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem(THEME_KEY, next);
+        Prefs.set(THEME_KEY, next);
         updateThemeIcon(next);
         setTimeout(function() {
           document.documentElement.classList.remove('theme-transitioning');
@@ -40,11 +63,11 @@
 
     // ─── Language Toggle ─────────────────────────────
     var langToggle = document.getElementById('langToggle');
-    var currentLang = localStorage.getItem(LANG_KEY) || 'zh';
+    var currentLang = Prefs.get(LANG_KEY) || 'zh';
 
     function applyLang(lang) {
       currentLang = lang;
-      localStorage.setItem(LANG_KEY, lang);
+      Prefs.set(LANG_KEY, lang);
       document.querySelectorAll('.lang-item').forEach(function(el) {
         el.classList.toggle('active', el.dataset.lang === lang);
       });
@@ -54,6 +77,41 @@
 
     // Initial language state
     applyLang(currentLang);
+    // ─── Generic i18n renderer (data-i18n + PAGE_I18N + GooeyNav labels) ───
+    var NAV_LABELS = {
+      zh: ['首页', '音乐', '旅行', '摄影', '运动', '简历', '联系'],
+      en: ['Home', 'Music', 'Travel', 'Photography', 'Sport', 'Resume', 'Contact'],
+      hant: ['首頁', '音樂', '旅行', '攝影', '運動', '履歷', '聯繫']
+    };
+
+    function renderPageI18N(lang) {
+      var dict = window.PAGE_I18N;
+      if (dict) {
+        var table = dict[lang] || dict['zh'] || {};
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (table[key]) el.innerHTML = table[key];
+        });
+        var titleKey = document.documentElement.getAttribute('data-i18n-title');
+        if (titleKey && table[titleKey]) document.title = table[titleKey];
+        document.querySelectorAll('[data-i18n-meta]').forEach(function (m) {
+          var key = m.getAttribute('data-i18n-meta');
+          if (table[key]) m.setAttribute('content', table[key]);
+        });
+      }
+      var labels = NAV_LABELS[lang] || NAV_LABELS.zh;
+      document.querySelectorAll('.gooey-nav-container nav ul li a').forEach(function (a, i) {
+        if (labels[i]) a.textContent = labels[i];
+      });
+    }
+
+    document.addEventListener('langchange', function (e) {
+      if (e.detail && e.detail.lang) renderPageI18N(e.detail.lang);
+    });
+    renderPageI18N(currentLang);
+    // Retry after GooeyNav finishes building (it is created by page scripts that run later)
+    setTimeout(function () { renderPageI18N(currentLang); }, 600);
+
 
     if (langToggle) {
       langToggle.addEventListener('click', function(e) {
